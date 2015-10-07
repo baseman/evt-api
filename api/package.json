@@ -1,0 +1,34 @@
+{
+  "name": "event-api",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Event Playing Swagger Project",
+  "keywords": [],
+  "author": "Stephen Hammond",
+  "license": "Apache2",
+  "directories": {
+    "src": "src",
+    "src_datasource": "../evt-ds",
+    "dist": "../dist/api",
+    "coverage": "../coverage/api"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node -e \"require('grunt').tasks(['api-test']);\""
+  },
+  "dependencies": {
+    "connect": "^3.3.5",
+    "evt-ds": "file:../evt-ds",
+    "redis": "^2.0.1",
+    "swagger-connect": "0.0.x",
+    "swagger-tools": "^0.9.5"
+  },
+  "devDependencies": {
+    "bluebird": "^2.9.34",
+    "grunt": "^0.4.5",
+    "grunt-jasmine-node": "0.3.1",
+    "jasmine-node": "^1.14.5",
+    "load-grunt-tasks": "^3.2.0"
+  }
+}

@@ -1,0 +1,6 @@
+.idea
+node_modules
+coverage
+*.sh
+*.conf
+api/swagger/swagger.json
