@@ -19,7 +19,8 @@ module.exports.getAggregate = function getAggregate (req, res, next) {
   ).catch(
       function(e){
         console.error(e);
-        res.status(500).send('Internal error.');
+        res.statusCode = 500;
+        res.end('server encountered an issue');
       }
   ).finally(function(){
         next();
