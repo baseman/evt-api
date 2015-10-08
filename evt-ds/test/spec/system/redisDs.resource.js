@@ -2,8 +2,13 @@ var resourceManager = require('../../../src/libs/util/resourceManager').getManag
 
 var _redisResources;
 
+var testKey = 'test_key';
 var _keys = {
-    testKey: 'test_key'
+    testKey: testKey,
+    prefix: {
+        key: testKey,
+        val: 1
+    }
 };
 
 var testResources = {

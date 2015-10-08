@@ -7,6 +7,7 @@ var aggregateService = {
 
     return {
       getAggregate: function(/*aggregateId*/) {
+        //todo: change pmGetItemsForKey to pmGetItemsForPrefixedKey(aggregateKey, '*')
         return _dep.dataSource.pmGetItemsForKey(aggregateKey)
             .then(function (result) {
               return { aggregateItems: result || [] };

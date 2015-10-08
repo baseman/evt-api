@@ -61,6 +61,8 @@ describe("redis data source", function(){
             expect(value[0]).toNotEqual(value[1]);
             expect(value[0]).toNotEqual(value[2]);
             expect(value[1]).toNotEqual(value[2]);
+        }).catch(function(e){
+            expect(e).toBeUndefined();
         }).finally(function(){
             done();
         });
@@ -79,6 +81,8 @@ describe("redis data source", function(){
             return _dataSource.pmGetItemsForKey(_testKeys.testKey);
         }).then(function(actual){
             assertArraysAreEqual(expect, expected, actual);
+        }).catch(function(e){
+            expect(e).toBeUndefined();
         }).finally(function(){
             done();
         });
@@ -91,12 +95,14 @@ describe("redis data source", function(){
             var cmdVals = expected.map(function (value) {
                 return JSON.stringify(value);
             });
-            cmdVals.unshift(_testKeys.testKey);
+            cmdVals.unshift(_testKeys.prefix.key + ':' + _testKeys.prefix.val);
             return _client.send_commandAsync('rpush', cmdVals)
         }).then(function(){
-            return _dataSource.pmGetItemsForKey(_testKeys.testKey);
+            return _dataSource.pmGetItemsForPrefixedKey(_testKeys.prefix.key, _testKeys.prefix.val);
         }).then(function(actual){
             assertArraysAreEqual(expect, expected, actual);
+        }).catch(function(e){
+            expect(e).toBeUndefined();
         }).finally(function(){
             done();
         });
