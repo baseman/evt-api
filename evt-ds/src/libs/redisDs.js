@@ -5,20 +5,20 @@ var initRedis = function(resources) {
     var _redisClient = resources.getResource().redisClient;
 
     var redisDs = {
-        promiseInitKeys: function(initKvps){
+        pmInitKeys: function(initKvps){
 
-            var initKvpPromises = [];
+            var pmInitKvp = [];
             for(var i = 0; i < initKvps.length; i++){
                 var kvp = initKvps[i];
-                initKvpPromises.push(
+                pmInitKvp.push(
                     _redisClient.setnxAsync(kvp.key, kvp.val)
                 );
             }
 
-            return Promise.all(initKvpPromises);
+            return Promise.all(pmInitKvp);
         },
         id: {
-            promiseUnique: function (key, length) {
+            pmUnique: function (key, length) {
                 return _redisClient.incrbyAsync(key, length).then(function (response) {
                     var ids = [];
                     var end = length + 1;
@@ -30,7 +30,7 @@ var initRedis = function(resources) {
                 });
             }
         },
-        promiseGetItems: function (key) {
+        pmGetItemsForKey: function (key) {
             return _redisClient.lrangeAsync(key, 0, -1)
                 .then(function (response) {
 
@@ -40,7 +40,7 @@ var initRedis = function(resources) {
 
                 });
         },
-        promiseSetItems: function (key, arrayValue) {
+        pmSetItems: function (key, arrayValue) {
             var cmdVals = arrayValue.map(function (value) {
                 return JSON.stringify(value);
             });

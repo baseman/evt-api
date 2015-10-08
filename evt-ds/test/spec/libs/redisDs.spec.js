@@ -53,10 +53,10 @@ describe("redis data source", function(){
 
         initDataSource().then(function(redisDs){
             _dataSource = redisDs;
-            return _dataSource.promiseInitKeys([{key: _testKeys.testKey, val: 0}]);
+            return _dataSource.pmInitKeys([{key: _testKeys.testKey, val: 0}]);
         }).then(function(){
             var count = 3;
-            return _dataSource.id.promiseUnique(_testKeys.testKey, count)
+            return _dataSource.id.pmUnique(_testKeys.testKey, count)
         }).then(function(value){
             expect(value[0]).toNotEqual(value[1]);
             expect(value[0]).toNotEqual(value[2]);
@@ -76,7 +76,25 @@ describe("redis data source", function(){
             cmdVals.unshift(_testKeys.testKey);
             return _client.send_commandAsync('rpush', cmdVals)
         }).then(function(){
-            return _dataSource.promiseGetItems(_testKeys.testKey);
+            return _dataSource.pmGetItemsForKey(_testKeys.testKey);
+        }).then(function(actual){
+            assertArraysAreEqual(expect, expected, actual);
+        }).finally(function(){
+            done();
+        });
+    });
+
+    it("should be able to retrieve json data for a prefixed key (eg. aggregate:1)", function(done){
+        var _dataSource;
+        initDataSource().then(function(dataSource) {
+            _dataSource = dataSource;
+            var cmdVals = expected.map(function (value) {
+                return JSON.stringify(value);
+            });
+            cmdVals.unshift(_testKeys.testKey);
+            return _client.send_commandAsync('rpush', cmdVals)
+        }).then(function(){
+            return _dataSource.pmGetItemsForKey(_testKeys.testKey);
         }).then(function(actual){
             assertArraysAreEqual(expect, expected, actual);
         }).finally(function(){

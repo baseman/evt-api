@@ -26,30 +26,30 @@ function assignAllCommitItems(commitItems, aggregates, events, aggregateIds){
 var commitmentService = {
     init: function (dep) {
         var _dataSource = dep.dataSource;
-        var _initPromise = _dataSource.promiseInitKeys([
+        var _pmInitCommitService = _dataSource.pmInitKeys([
             {key: keys.aggregateKey, val: 0},
             {key: keys.eventKey, val: 0}
         ]);
 
         return {
-            promiseCommitAggregate: function(data) {
+            pmCommitAggregate: function(data) {
 
                 var commitItems = data.commitAggregateBody.commitAggregateItems;
                 var events = [];
                 var aggregates = [];
 
-                return _initPromise.then(function(){
-                        return _dataSource.promiseMakeUniqueIds(keys.aggregateKey, commitItems.length);
+                return _pmInitCommitService.then(function(){
+                        return _dataSource.pmMakeUniqueIds(keys.aggregateKey, commitItems.length);
                     }).then(function(aggregateIds){
                         assignAllCommitItems(commitItems, aggregates, events, aggregateIds);
-                        return _dataSource.promiseMakeUniqueIds(keys.eventKey, events.length);
+                        return _dataSource.pmMakeUniqueIds(keys.eventKey, events.length);
                     }).then(function(eventIds){
                         for(var e = 0; e < events.length; e++){
                             events[e].event.id = eventIds[e];
                         }
                         return Promise.all([
-                            _dataSource.promiseSetItems(keys.aggregateKey, { aggregateItems: aggregates }),
-                            _dataSource.promiseSetItems(keys.eventKey, { eventItems: events })
+                            _dataSource.pmSetItems(keys.aggregateKey, { aggregateItems: aggregates }),
+                            _dataSource.pmSetItems(keys.eventKey, { eventItems: events })
                         ]);
                     }).then(function(){
                         return "Success";

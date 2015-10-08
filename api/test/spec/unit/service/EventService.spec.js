@@ -8,7 +8,7 @@ describe('Event Service', function(){
         var expected = { eventItems: [{"type":"added","aggregateType":"calculation","aggregateId":1,"version":2,"data":{"addVal":101}}] };
 
         var dsFx = {
-            promiseGetItems: function(key){
+            pmGetItemsForKey: function(key){
                 expect(key).toEqual('EVENT');
                 return new Promise(function(resolve){
                     resolve(expected.eventItems);
@@ -30,7 +30,7 @@ describe('Event Service', function(){
         var expected = { eventItems: [] };
 
         var dsFx = {
-            promiseGetItems: function(key){
+            pmGetItemsForKey: function(key){
                 expect(key).toEqual('EVENT');
                 return new Promise(function(resolve){
                     resolve(null);

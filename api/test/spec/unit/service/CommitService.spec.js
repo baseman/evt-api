@@ -3,22 +3,22 @@ var Promise = require('bluebird');
 var _dependencies = require('../system/dependencies');
 var _commitService = require('../../../../controllers/CommitService');
 
-//todo: remove on successful test
-//function assertAggregate(expect, expected, actual) {
-//    expect(actual.id).toBeGreaterThan(0);
-//    expect(actual.type).toEqual(expected.type);
-//}
-//
-//function assertEvent(expect, expected, actual) {
-//    expect(actual.id).toBeGreaterThan(0);
-//    expect(actual.type).toEqual(expected.type);
-//    expect(actual.version).toEqual(expected.version);
-//    expect(actual.aggregate.id).toBeGreaterThan(0);
-//    expect(actual.aggregate.type).toEqual(expected.aggregate.type);
-//}
-//function assertContainsValidKey(expect, key) {
-//    expect(key === 'AGGREGATE' || key === 'EVENT').toBeTruthy();
-//}
+function assertAggregate(expect, expected, actual) {
+    expect(actual.id).toBeGreaterThan(0);
+    expect(actual.type).toEqual(expected.type);
+}
+
+function assertEvent(expect, expected, actual) {
+    expect(actual.id).toBeGreaterThan(0);
+    expect(actual.type).toEqual(expected.type);
+    expect(actual.version).toEqual(expected.version);
+    expect(actual.aggregate.id).toBeGreaterThan(0);
+    expect(actual.aggregate.type).toEqual(expected.aggregate.type);
+}
+
+function assertContainsValidKey(expect, key) {
+    expect(key === 'AGGREGATE' || key === 'EVENT').toBeTruthy();
+}
 
 function assertEventAggregate(expect, aggregate, eventAggregate) {
     expect(aggregate.id).toEqual(eventAggregate.id);
@@ -60,56 +60,54 @@ function assertInitKvp (expect, expected, actual) {
 describe('Commit Service', function(){
     it('should promise set Aggregate and Event JSON', function(done){
         var dsFx = {
-            promiseInitKeys: function(actual){
+            pmInitKeys: function(actual){
                 assertInitKvp(expect, {key: 'AGGREGATE', val: 0}, actual[0]);
                 assertInitKvp(expect, {key: 'EVENT', val: 0}, actual[1]);
                 return Promise.resolve();
+            },
+            pmMakeUniqueIds: function(key, count){
+                var _count = count;
+
+                assertContainsValidKey(expect, key);
+                return new Promise(function(resolve){
+                    var maxId = _count + 1;
+                    var ids = [];
+                    for(var i = 1; i < maxId; i++){
+                        ids.push(i);
+                    }
+
+                    resolve(ids);
+                });
+            },
+            pmSetItems: function(key, value){
+                assertContainsValidKey(expect, key);
+
+                if(key === 'AGGREGATE'){
+                    assertAggregate(expect, inputAggregates[0], value.aggregateItems[0].aggregate);
+                    assertAggregate(expect, inputAggregates[1], value.aggregateItems[1].aggregate);
+                    assertAggregate(expect, inputAggregates[2], value.aggregateItems[2].aggregate);
+                }
+
+                if(key.indexOf('EVENT') !== -1){
+                    assertEvent(expect, inputEvents[0].event, value.eventItems[0].event);
+                    assertEvent(expect, inputEvents[1].event, value.eventItems[1].event);
+                    assertEvent(expect, inputEvents[2].event, value.eventItems[2].event);
+                    assertEvent(expect, inputEvents[3].event, value.eventItems[3].event);
+                    assertEvent(expect, inputEvents[4].event, value.eventItems[4].event);
+                    assertEvent(expect, inputEvents[5].event, value.eventItems[5].event);
+                    assertEvent(expect, inputEvents[6].event, value.eventItems[6].event);
+                    assertEvent(expect, inputEvents[7].event, value.eventItems[7].event);
+                    assertEvent(expect, inputEvents[8].event, value.eventItems[8].event);
+                }
+
+                return new Promise(function(resolve){
+                    resolve(true);
+                });
             }
-            //todo: remove on successful test
-            //,
-            //promiseMakeUniqueIds: function(key, count){
-            //    var _count = count;
-            //
-            //    assertContainsValidKey(expect, key);
-            //    return new Promise(function(resolve){
-            //        var maxId = _count + 1;
-            //        var ids = [];
-            //        for(var i = 1; i < maxId; i++){
-            //            ids.push(i);
-            //        }
-            //
-            //        resolve(ids);
-            //    });
-            //},
-            //promiseSetItems: function(key, value){
-            //    assertContainsValidKey(expect, key);
-            //
-            //    if(key === 'AGGREGATE'){
-            //        assertAggregate(expect, inputAggregates[0], value.aggregateItems[0].aggregate);
-            //        assertAggregate(expect, inputAggregates[1], value.aggregateItems[1].aggregate);
-            //        assertAggregate(expect, inputAggregates[2], value.aggregateItems[2].aggregate);
-            //    }
-            //
-            //    if(key.indexOf('EVENT') !== -1){
-            //        assertEvent(expect, inputEvents[0].event, value.eventItems[0].event);
-            //        assertEvent(expect, inputEvents[1].event, value.eventItems[1].event);
-            //        assertEvent(expect, inputEvents[2].event, value.eventItems[2].event);
-            //        assertEvent(expect, inputEvents[3].event, value.eventItems[3].event);
-            //        assertEvent(expect, inputEvents[4].event, value.eventItems[4].event);
-            //        assertEvent(expect, inputEvents[5].event, value.eventItems[5].event);
-            //        assertEvent(expect, inputEvents[6].event, value.eventItems[6].event);
-            //        assertEvent(expect, inputEvents[7].event, value.eventItems[7].event);
-            //        assertEvent(expect, inputEvents[8].event, value.eventItems[8].event);
-            //    }
-            //
-            //    return new Promise(function(resolve){
-            //        resolve(true);
-            //    });
-            //}
         };
 
         var commitService = _commitService.init(_dependencies.getForService(dsFx));
-        commitService.promiseCommitAggregate(input)
+        commitService.pmCommitAggregate(input)
             .then(function(result){
 
                 var commitAggregateItems = input.commitAggregateBody.commitAggregateItems;

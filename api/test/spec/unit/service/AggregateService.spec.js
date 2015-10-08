@@ -9,7 +9,7 @@ describe('Aggregate Service', function(){
         var expected = { aggregateItems: [{"aggregateType":"calculation","val":0,"version":1,"aggregateId":1}] };
 
         var dsFx = {
-            promiseGetItems: function(key){
+            pmGetItemsForKey: function(key){
                 expect(key).toEqual('AGGREGATE');
                 return new Promise(function(resolve){
                     resolve(expected.aggregateItems);
@@ -31,7 +31,7 @@ describe('Aggregate Service', function(){
         var expected = { aggregateItems: [] };
 
         var dsFx = {
-            promiseGetItems: function(key){
+            pmGetItemsForKey: function(key){
                 expect(key).toEqual('AGGREGATE');
                 return new Promise(function(resolve){
                     resolve(null);

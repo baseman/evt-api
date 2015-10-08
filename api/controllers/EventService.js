@@ -8,7 +8,7 @@ var EventService = {
 
     return {
       getEvent: function(/*aggregateId*/) {
-        return _dep.dataSource.promiseGetItems(eventKey).then(function(result){
+        return _dep.dataSource.pmGetItemsForKey(eventKey).then(function(result){
           return { eventItems: result || [] };
         });
       }

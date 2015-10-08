@@ -7,7 +7,7 @@ var aggregateService = {
 
     return {
       getAggregate: function(/*aggregateId*/) {
-        return _dep.dataSource.promiseGetItems(aggregateKey)
+        return _dep.dataSource.pmGetItemsForKey(aggregateKey)
             .then(function (result) {
               return { aggregateItems: result || [] };
             });
