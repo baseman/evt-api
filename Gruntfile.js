@@ -19,7 +19,9 @@ module.exports = function (grunt) {
         files: [{
           dot: true,
           src: [
-            '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.api_ds %>' // build dependency
+            // build dependencies
+            '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.api_util %>',
+            '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.api_ds %>'
           ]
         }]
       }
@@ -41,6 +43,10 @@ module.exports = function (grunt) {
     },
 
     exec: {
+      util_validate: {
+        cmd: 'npm test',
+        cwd: '<%= pkg.directories.api_util%>'
+      },
       ds_validate: {
         cmd: 'npm test',
         cwd: '<%= pkg.directories.api_ds%>'
@@ -48,6 +54,10 @@ module.exports = function (grunt) {
       api_validate: {
         cmd: 'npm test',
         cwd: '<%= pkg.directories.api%>'
+      },
+      util_install_dependencies: {
+        cmd: 'npm install -i',
+        cwd: '<%= pkg.directories.api_util%>'
       },
       ds_install_dependencies: {
         cmd: 'npm install -i',
@@ -72,11 +82,13 @@ module.exports = function (grunt) {
 
   grunt.registerTask('api-install-dependencies', [
     'clean:api_dependencies',
+    'exec:util_install_dependencies',
     'exec:ds_install_dependencies',
     'exec:api_install_dependencies'
   ]);
 
   grunt.registerTask('api-validate', [
+    'exec:util_validate',
     'exec:ds_validate',
     'exec:api_validate'
   ]);

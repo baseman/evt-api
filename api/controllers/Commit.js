@@ -1,12 +1,16 @@
 'use strict';
-
 var dependencies = require('../system/dependencies');
-var commitService = require('./CommitService').init(dependencies.getForService());
+var commitSvc  = require('./CommitService');
+
+var commitSvcInst;
+dependencies.pmInitDependencies.then(function(depInst){
+  commitSvcInst = commitSvc.init(depInst.forService);
+});
 
 module.exports.commit = function commit (req, res, next) {
   var commitAggregate = req.swagger.params['commitAggregate'].value;
 
-  commitService.pmCommitAggregate(commitAggregate).then(function (result) {
+  commitSvcInst.pmCommitAggregate(commitAggregate).then(function (result) {
     if (typeof result !== 'undefined') {
       res.setHeader('Content-Type', 'application/json');
       res.end("Success");

@@ -6,7 +6,11 @@ var _aggregateService = require('../../../../controllers/AggregateService');
 describe('Aggregate Service', function(){
     it('should promise JSON get', function(done){
 
-        var expected = { aggregateItems: [{"aggregateType":"calculation","val":0,"version":1,"aggregateId":1}] };
+        var expected = {
+            aggregateItems: [
+                {"aggregateType": "calculation", "val": 0, "version": 1, "aggregateId": 1}
+            ]
+        };
 
         var dsFx = {
             pmGetItemsForKey: function(key){

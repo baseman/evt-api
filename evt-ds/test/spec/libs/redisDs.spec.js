@@ -1,7 +1,7 @@
 var Promise = require("bluebird");
 Promise.longStackTraces();
 
-var _resourceManager = require('../../../src/libs/util/resourceManager').getManager();
+var _resourceManager = require('evt-util').resourceManager.getManager();
 
 var _redis = Promise.promisifyAll(require("redis"));
 var _redisDs = require('../../../src/libs/redisDs');
@@ -96,12 +96,13 @@ describe("redis data source", function(){
                 return JSON.stringify(value);
             });
             cmdVals.unshift(_testKeys.prefix.key + ':' + _testKeys.prefix.val);
-            return _client.send_commandAsync('rpush', cmdVals)
+            return _client.send_commandAsync('rpush', cmdVals);
         }).then(function(){
             return _dataSource.pmGetItemsForPrefixedKey(_testKeys.prefix.key, _testKeys.prefix.val);
         }).then(function(actual){
             assertArraysAreEqual(expect, expected, actual);
         }).catch(function(e){
+            console.error(e.stack);
             expect(e).toBeUndefined();
         }).finally(function(){
             done();

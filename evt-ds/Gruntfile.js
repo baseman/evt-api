@@ -33,7 +33,6 @@ module.exports = function (grunt) {
           { src: ['<%= pkg.directories.test %>/*'], dest: '<%= pkg.directories.coverage %>/test/spec/', filter: 'isFile', flatten: true, expand: true },
           //libs
           { src: ['<%= pkg.directories.test %>/spec/libs/*'], dest: '<%= pkg.directories.coverage %>/test/spec/libs/', filter: 'isFile', flatten: true, expand: true },
-          { src: ['<%= pkg.directories.test %>/spec/libs/util/*'], dest: '<%= pkg.directories.coverage %>/test/spec/libs/util/', filter: 'isFile', flatten: true, expand: true },
           //system
           { src: ['<%= pkg.directories.test %>/spec/system/*'], dest: '<%= pkg.directories.coverage %>/test/spec/system/', filter: 'isFile', flatten: true, expand: true }
         ]

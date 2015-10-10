@@ -1,4 +1,4 @@
-var resourceManager = require('../../../../src/libs/util/resourceManager');
+var resourceManager = require('../../src/resourceManager');
 
 describe("resource factory" , function(){
 
@@ -9,17 +9,15 @@ describe("resource factory" , function(){
 
     it("should create resources", function(){
         var actual = _instance.createResource({
-            initResource: function(){},
+            promiseInitResource: function(){},
             checkResource: function(){},
             cleanupResource: function(){},
-            getResource: function(){},
             onUse: function(){},
             onUsed: function(){}
         });
 
-        expect(actual.initResource).toBeDefined();
+        expect(actual.promiseInitResource).toBeDefined();
         expect(actual.checkResource).toBeDefined();
-        expect(actual.getResource).toBeDefined();
         expect(actual.onUse).toBeDefined();
         expect(actual.onUsed).toBeDefined();
     });
@@ -29,17 +27,15 @@ describe("resource factory" , function(){
             _instance.createResource({
                 checkResource: function(){},
                 cleanupResource: function(){},
-                getResource: function(){},
                 onUse: function(){},
                 onUsed: function(){}
             })
-        }).toThrow(new Error("initResource has not been defined"));
+        }).toThrow(new Error("promiseInitResource has not been defined"));
 
         expect(function(){
             _instance.createResource({
-                initResource: function(){},
+                promiseInitResource: function(){},
                 cleanupResource: function(){},
-                getResource: function(){},
                 onUse: function(){},
                 onUsed: function(){}
             })
@@ -47,9 +43,8 @@ describe("resource factory" , function(){
 
         expect(function(){
             _instance.createResource({
-                initResource: function(){},
+                promiseInitResource: function(){},
                 checkResource: function(){},
-                getResource: function(){},
                 onUse: function(){},
                 onUsed: function(){}
             })
@@ -57,30 +52,18 @@ describe("resource factory" , function(){
 
         expect(function(){
             _instance.createResource({
-                initResource: function(){},
+                promiseInitResource: function(){},
                 checkResource: function(){},
                 cleanupResource: function(){},
-                onUse: function(){},
-                onUsed: function(){}
-            })
-        }).toThrow(new Error("getResource has not been defined"));
-
-        expect(function(){
-            _instance.createResource({
-                initResource: function(){},
-                checkResource: function(){},
-                cleanupResource: function(){},
-                getResource: function(){},
                 onUsed: function(){}
             })
         }).toThrow(new Error("onUse has not been defined"));
 
         expect(function(){
             _instance.createResource({
-                initResource: function(){},
+                promiseInitResource: function(){},
                 checkResource: function(){},
                 cleanupResource: function(){},
-                getResource: function(){},
                 onUse: function(){}
             })
         }).toThrow(new Error("onUsed has not been defined"));

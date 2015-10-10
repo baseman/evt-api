@@ -1,19 +1,21 @@
-var Promise = require('bluebird');
-
-var redis = Promise.promisifyAll(require('redis'));
 var ds = require('evt-ds');
 
 var resources = require('./resources');
 
 resources.onCleanup();
-resources.redis.initResource({redisClient: redis.createClient(6379, '127.0.0.1')});
+var pmInitDependencies = resources.redis
+    .promiseInitResource({
+        redisConn: { redisPort: 6379, redisHost: '127.0.0.1'}
+    }).then(function(redisRes) {
+        var redisDs = ds.getDs({dsType: 'redis'})
+            .initDataSource(redisRes.redisClient).dataSource;
 
-var _dataSource = ds.getDs({dsType: 'redis'}).initDataSource(resources.redis).dataSource;
+        redisDs.pmInitKeys([
+            {key: keys.aggregateKey, val: 0},
+            {key: keys.eventKey, val: 0}
+        ]);
 
-var dependencies = {
-    getForService: function(){
-        return { dataSource: _dataSource };
-    }
-};
+        return { forService: { dataSource: redisDs } };
+    });
 
-module.exports = dependencies;
+module.exports = { pmInitDependencies: pmInitDependencies };

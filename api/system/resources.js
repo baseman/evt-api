@@ -1,39 +1,57 @@
-var _resourceManager = require('evt-ds').resourceManager.instance;
+var Promise = require('bluebird');
+var redis = Promise.promisifyAll(require('redis'));
+
+var _resourceManager = require('evt-util').resourceManager.getManager();
 
 var _keys = {
-    aggregateKey: 'AGGREGATE',
-    eventKey: 'EVENT'
+    aggregateKey: 'AGGREGATE_ID',
+    eventKey: 'EVENT_ID'
+};
+
+var _redisRes = {
+    redisPort: null,
+    redisHost: null,
+    redisClient: null
 };
 
 var resources = {
     key: {
-        getKeys: function(){
+        getKeys: function () {
             return _keys;
         }
     },
     redis: _resourceManager.createResource({
-        initResource: function(redisResources){
-            _redisResources = redisResources;
+        promiseInitResource: function (redisRes) {
+
+            _redisRes = redisRes;
+            _redisRes.redisClient = redis.createClient(
+                _redisRes.redisConn.redisPort,
+                _redisRes.redisConn.redisHost);
+
+            return _redisRes.redisClient
+                .onAsync('connect').then(function () {
+                    return _redisRes;
+                });
         },
-        checkResource: function(){
-            if(!_redisResources){
+        checkResource: function () {
+            if (!_redisRes) {
                 throw new Error("Resources have not been initialized");
             }
         },
-        getResource: function(){
-            return _redisResources;
+        onUse: function () {
         },
-        onUse: function(){},
-        onUsed: function(){},
+        onUsed: function () {
+        },
         cleanupResource: function () {
             console.log('end redis');
-            _redisResources.redisClient.quit();
+            _redisRes.redisClient.quit();
         }
     }),
     onCleanup: function () {
         // attach user callback to the process event emitter
         // if no callback, it will still exit gracefully on Ctrl-C
-        var _cleanup = _resourceManager.cleanUpResources || function(){};
+        var _cleanup = _resourceManager.cleanUpResources || function () {
+            };
         process.on('cleanup', _cleanup);
 
         // do app specific cleaning before exiting
@@ -48,7 +66,7 @@ var resources = {
         });
 
         //catch uncaught exceptions, trace, then exit normally
-        process.on('uncaughtException', function(e) {
+        process.on('uncaughtException', function (e) {
             console.log('Uncaught Exception...');
             console.log(e.stack);
             process.exit(99);

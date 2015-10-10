@@ -4,11 +4,11 @@ var eventKey = require('../system/resources').key.getKeys().eventKey;
 
 var EventService = {
   init: function(dep){
-    var _dep = dep;
+    var _ds = dep.dataSource;
 
     return {
       getEvent: function(/*aggregateId*/) {
-        return _dep.dataSource.pmGetItemsForKey(eventKey).then(function(result){
+        return _ds.dataSource.pmGetItemsForKey(eventKey).then(function(result){
           return { eventItems: result || [] };
         });
       }

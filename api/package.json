@@ -20,6 +20,7 @@
   "dependencies": {
     "connect": "^3.3.5",
     "evt-ds": "file:../evt-ds",
+    "evt-util": "file:../evt-util",
     "redis": "^2.0.1",
     "swagger-connect": "0.0.x",
     "swagger-tools": "^0.9.5"

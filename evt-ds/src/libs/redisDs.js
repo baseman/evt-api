@@ -2,7 +2,7 @@ var Promise = require("bluebird");
 
 var initRedis = function(resources) {
 
-    var _redisClient = resources.getResource().redisClient;
+    var _redisClient = resources.redisClient;
 
     var redisDs = {
         pmInitKeys: function(initKvps){
@@ -31,6 +31,16 @@ var initRedis = function(resources) {
             }
         },
         pmGetItemsForKey: function (key) {
+            return _redisClient.lrangeAsync(key, 0, -1)
+                .then(function (response) {
+
+                    return response.map(function (strJson) {
+                        return JSON.parse(strJson);
+                    });
+
+                });
+        },
+        pmGetItemsForPrefixedKey: function(prefix, key){
             return _redisClient.lrangeAsync(key, 0, -1)
                 .then(function (response) {
 

@@ -1,4 +1,5 @@
 'use strict';
+
 var Promise = require('bluebird');
 var keys = require('../system/resources').key.getKeys();
 
@@ -25,11 +26,7 @@ function assignAllCommitItems(commitItems, aggregates, events, aggregateIds){
 
 var commitmentService = {
     init: function (dep) {
-        var _dataSource = dep.dataSource;
-        var _pmInitCommitService = _dataSource.pmInitKeys([
-            {key: keys.aggregateKey, val: 0},
-            {key: keys.eventKey, val: 0}
-        ]);
+        var _ds = dep.dataSource;
 
         return {
             pmCommitAggregate: function(data) {
@@ -39,17 +36,17 @@ var commitmentService = {
                 var aggregates = [];
 
                 return _pmInitCommitService.then(function(){
-                        return _dataSource.pmMakeUniqueIds(keys.aggregateKey, commitItems.length);
+                        return _ds.pmMakeUniqueIds(keys.aggregateKey, commitItems.length);
                     }).then(function(aggregateIds){
                         assignAllCommitItems(commitItems, aggregates, events, aggregateIds);
-                        return _dataSource.pmMakeUniqueIds(keys.eventKey, events.length);
+                        return _ds.pmMakeUniqueIds(keys.eventKey, events.length);
                     }).then(function(eventIds){
                         for(var e = 0; e < events.length; e++){
                             events[e].event.id = eventIds[e];
                         }
                         return Promise.all([
-                            _dataSource.pmSetItems(keys.aggregateKey, { aggregateItems: aggregates }),
-                            _dataSource.pmSetItems(keys.eventKey, { eventItems: events })
+                            _ds.pmSetItems(keys.aggregateKey, { aggregateItems: aggregates }),
+                            _ds.pmSetItems(keys.eventKey, { eventItems: events })
                         ]);
                     }).then(function(){
                         return "Success";
