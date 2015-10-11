@@ -9,7 +9,7 @@
   "directories": {
     "api": "api",
     "api_ds": "evt-ds",
-    "api_util": "evt-util",
+    "api_util": "evt-res",
     "dist": "dist/api",
     "coverage": "coverage/api"
   },

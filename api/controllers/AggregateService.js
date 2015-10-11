@@ -1,6 +1,6 @@
 'use strict';
 
-var aggregateKey = require('../system/resources').key.getKeys().aggregateKey;
+var aggregateKey = require('../config/redis.config').key.aggregateIdKey;
 
 var aggregateService = {
   init: function(dep){

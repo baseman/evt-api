@@ -17,7 +17,7 @@ function assertEvent(expect, expected, actual) {
 }
 
 function assertContainsValidKey(expect, key) {
-    expect(key === 'AGGREGATE' || key === 'EVENT').toBeTruthy();
+    expect(key === 'AGGREGATE_ID' || key === 'EVENT_ID').toBeTruthy();
 }
 
 function assertEventAggregate(expect, aggregate, eventAggregate) {

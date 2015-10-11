@@ -1,52 +1,10 @@
-var Promise = require('bluebird');
-var redis = Promise.promisifyAll(require('redis'));
+var resUtil = require('evt-res');
+var managedResource = resUtil.managedResource;
 
-var _resourceManager = require('evt-util').resourceManager.getManager();
-
-var _keys = {
-    aggregateKey: 'AGGREGATE_ID',
-    eventKey: 'EVENT_ID'
-};
-
-var _redisRes = {
-    redisPort: null,
-    redisHost: null,
-    redisClient: null
-};
+var _resourceManager = resUtil.resourceManager.getManager();
 
 var resources = {
-    key: {
-        getKeys: function () {
-            return _keys;
-        }
-    },
-    redis: _resourceManager.createResource({
-        promiseInitResource: function (redisRes) {
-
-            _redisRes = redisRes;
-            _redisRes.redisClient = redis.createClient(
-                _redisRes.redisConn.redisPort,
-                _redisRes.redisConn.redisHost);
-
-            return _redisRes.redisClient
-                .onAsync('connect').then(function () {
-                    return _redisRes;
-                });
-        },
-        checkResource: function () {
-            if (!_redisRes) {
-                throw new Error("Resources have not been initialized");
-            }
-        },
-        onUse: function () {
-        },
-        onUsed: function () {
-        },
-        cleanupResource: function () {
-            console.log('end redis');
-            _redisRes.redisClient.quit();
-        }
-    }),
+    redis: managedResource.redis,
     onCleanup: function () {
         // attach user callback to the process event emitter
         // if no callback, it will still exit gracefully on Ctrl-C

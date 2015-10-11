@@ -73,9 +73,9 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('utils-test', ['jasmine_node']);
+    grunt.registerTask('resource-test', ['jasmine_node']);
 
-    grunt.registerTask('utils-cover', [
+    grunt.registerTask('resource-cover', [
         'clean:coverage',
         'copy:coverage',
         'instrument',

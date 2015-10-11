@@ -9,7 +9,7 @@ describe('Event Service', function(){
 
         var dsFx = {
             pmGetItemsForKey: function(key){
-                expect(key).toEqual('EVENT');
+                expect(key).toEqual('EVENT_ID');
                 return new Promise(function(resolve){
                     resolve(expected.eventItems);
                 });
@@ -31,7 +31,7 @@ describe('Event Service', function(){
 
         var dsFx = {
             pmGetItemsForKey: function(key){
-                expect(key).toEqual('EVENT');
+                expect(key).toEqual('EVENT_ID');
                 return new Promise(function(resolve){
                     resolve(null);
                 });

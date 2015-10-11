@@ -20,6 +20,7 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             // build dependencies
+            '<%= pkg.directories.api_ds %>/node_modules/<%= pkg.directories.api_util %>',
             '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.api_util %>',
             '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.api_ds %>'
           ]

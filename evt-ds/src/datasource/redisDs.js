@@ -1,6 +1,6 @@
 var Promise = require("bluebird");
 
-var initRedis = function(resources) {
+var initDataSource = function(resources) {
 
     var _redisClient = resources.redisClient;
 
@@ -40,16 +40,6 @@ var initRedis = function(resources) {
 
                 });
         },
-        pmGetItemsForPrefixedKey: function(prefix, key){
-            return _redisClient.lrangeAsync(key, 0, -1)
-                .then(function (response) {
-
-                    return response.map(function (strJson) {
-                        return JSON.parse(strJson);
-                    });
-
-                });
-        },
         pmSetItems: function (key, arrayValue) {
             var cmdVals = arrayValue.map(function (value) {
                 return JSON.stringify(value);
@@ -61,4 +51,4 @@ var initRedis = function(resources) {
     return { dataSource: redisDs }
 };
 
-module.exports = { initDataSource: initRedis };
+module.exports = { initDataSource: initDataSource };

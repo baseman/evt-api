@@ -1,7 +1,7 @@
 'use strict';
 
 var Promise = require('bluebird');
-var keys = require('../system/resources').key.getKeys();
+var key = require('../config/redis.config').key;
 
 function assignId(commitAggregate, uniqueId) {
     commitAggregate.aggregate.id = uniqueId;
@@ -35,18 +35,17 @@ var commitmentService = {
                 var events = [];
                 var aggregates = [];
 
-                return _pmInitCommitService.then(function(){
-                        return _ds.pmMakeUniqueIds(keys.aggregateKey, commitItems.length);
-                    }).then(function(aggregateIds){
+                return _ds.pmMakeUniqueIds(key.aggregateIdKey, commitItems.length)
+                    .then(function(aggregateIds){
                         assignAllCommitItems(commitItems, aggregates, events, aggregateIds);
-                        return _ds.pmMakeUniqueIds(keys.eventKey, events.length);
+                        return _ds.pmMakeUniqueIds(key.eventIdKey, events.length);
                     }).then(function(eventIds){
                         for(var e = 0; e < events.length; e++){
                             events[e].event.id = eventIds[e];
                         }
                         return Promise.all([
-                            _ds.pmSetItems(keys.aggregateKey, { aggregateItems: aggregates }),
-                            _ds.pmSetItems(keys.eventKey, { eventItems: events })
+                            _ds.pmSetItems(key.aggregateIdKey, { aggregateItems: aggregates }),
+                            _ds.pmSetItems(key.eventIdKey, { eventItems: events })
                         ]);
                     }).then(function(){
                         return "Success";

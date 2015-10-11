@@ -16,10 +16,11 @@
     "test": "node -e \"require('grunt').tasks(['ds-test']);\""
   },
   "dependencies": {
-    "bluebird": "^2.9.34"
+    "bluebird": "^2.9.34",
+    "evt-res": "file:../evt-res"
   },
   "devDependencies": {
-    "evt-util": "file:../evt-util",
+    "evt-res": "file:../evt-res",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.1",

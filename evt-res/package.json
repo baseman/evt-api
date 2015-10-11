@@ -1,15 +1,15 @@
 {
-  "name": "evt-util",
+  "name": "evt-res",
   "version": "1.0.0",
-  "description": "utility modules",
-  "main": "index.js",
+  "description": "resource modules",
+  "main": "src/index.js",
   "directories": {
     "src": "src",
     "test": "test",
     "coverage": "coverage"
   },
   "scripts": {
-    "test": "node -e \"require('grunt').tasks(['utils-test']);\""
+    "test": "node -e \"require('grunt').tasks(['resource-test']);\""
   },
   "author": "steve hammond",
   "devDependencies": {

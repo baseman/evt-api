@@ -1,6 +1,6 @@
 var dsItems = {
-    redis: require('./libs/redisDs'),
-    injected: require('./libs/injectedDs')
+    redis: require('./datasource/redisDs'),
+    injected: require('./datasource/injectedDs')
 };
 
 var ds = {
