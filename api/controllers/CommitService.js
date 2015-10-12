@@ -32,20 +32,20 @@ var commitmentService = {
             pmCommitAggregate: function(data) {
 
                 var commitItems = data.commitAggregateBody.commitAggregateItems;
-                var events = [];
-                var aggregates = [];
+                var eventItems = [];
+                var aggregateItems = [];
 
                 return _ds.pmMakeUniqueIds(key.aggregateIdKey, commitItems.length)
                     .then(function(aggregateIds){
-                        assignAllCommitItems(commitItems, aggregates, events, aggregateIds);
-                        return _ds.pmMakeUniqueIds(key.eventIdKey, events.length);
+                        assignAllCommitItems(commitItems, aggregateItems, eventItems, aggregateIds);
+                        return _ds.pmMakeUniqueIds(key.eventIdKey, eventItems.length);
                     }).then(function(eventIds){
-                        for(var e = 0; e < events.length; e++){
-                            events[e].event.id = eventIds[e];
+                        for(var e = 0; e < eventItems.length; e++){
+                            eventItems[e].event.id = eventIds[e];
                         }
                         return Promise.all([
-                            _ds.pmSetItems(key.aggregateIdKey, { aggregateItems: aggregates }),
-                            _ds.pmSetItems(key.eventIdKey, { eventItems: events })
+                            _ds.pmSetItems(key.aggregateItemsKey, aggregateItems ),
+                            _ds.pmSetItems(key.aggregateItemsKey, eventItems )
                         ]);
                     }).then(function(){
                         return "Success";

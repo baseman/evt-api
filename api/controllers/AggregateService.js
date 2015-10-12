@@ -1,6 +1,6 @@
 'use strict';
 
-var aggregateKey = require('../config/redis.config').key.aggregateIdKey;
+var aggregateItemsKey = require('../config/redis.config').key.aggregateItemsKey;
 
 var aggregateService = {
   init: function(dep){
@@ -8,9 +8,11 @@ var aggregateService = {
 
     return {
       getAggregate: function(/*aggregateId*/) {
-        return _ds.pmGetItemsForKey(aggregateKey)
+          console.log('TRY!');
+        return _ds.pmGetItemsForKey(aggregateItemsKey)
             .then(function (result) {
-              return { aggregateItems: result || [] };
+                console.log('SUCCESS!');
+                return { aggregateItems: result || [] };
             });
       }
     }

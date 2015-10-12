@@ -1,7 +1,9 @@
 var redisConfig = {
     key: {
         aggregateIdKey: 'AGGREGATE_ID',
-        eventIdKey: 'EVENT_ID'
+        eventIdKey: 'EVENT_ID',
+        aggregateItemsKey: 'AGGREGATE_ITEMS',
+        eventItemsKey: 'EVENT_ITEMS'
     },
     redisConn: {
         redisPort: 6379,

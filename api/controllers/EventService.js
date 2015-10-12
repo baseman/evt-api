@@ -1,6 +1,6 @@
 'use strict';
 
-var eventKey = require('../config/redis.config').key.eventIdKey;
+var eventItemsKey = require('../config/redis.config').key.eventItemsKey;
 
 var EventService = {
   init: function(dep){
@@ -8,7 +8,7 @@ var EventService = {
 
     return {
       getEvent: function(/*aggregateId*/) {
-        return _ds.pmGetItemsForKey(eventKey).then(function(result){
+        return _ds.pmGetItemsForKey(eventItemsKey).then(function(result){
           return { eventItems: result || [] };
         });
       }
