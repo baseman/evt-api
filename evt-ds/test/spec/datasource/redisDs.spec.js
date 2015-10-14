@@ -53,7 +53,7 @@ describe('redis data source', function(){
             return _dataSource.pmInitKeys([{key: _testKeys.testIdKey, val: 0}]);
         }).then(function(){
             var count = 3;
-            return _dataSource.id.pmUnique(_testKeys.testIdKey, count);
+            return _dataSource.id.pmMakeUniqueIds(_testKeys.testIdKey, count);
         }).then(function(value){
             expect(value[0]).toNotEqual(value[1]);
             expect(value[0]).toNotEqual(value[2]);

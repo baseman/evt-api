@@ -14,7 +14,7 @@ describe('Aggregate Service', function(){
 
         var dsFx = {
             pmGetItemsForKey: function(key){
-                expect(key).toEqual('AGGREGATE_ID');
+                expect(key).toEqual('AGGREGATE_ITEMS');
                 return new Promise(function(resolve){
                     resolve(expected.aggregateItems);
                 });
@@ -36,7 +36,7 @@ describe('Aggregate Service', function(){
 
         var dsFx = {
             pmGetItemsForKey: function(key){
-                expect(key).toEqual('AGGREGATE_ID');
+                expect(key).toEqual('AGGREGATE_ITEMS');
                 return new Promise(function(resolve){
                     resolve(null);
                 });

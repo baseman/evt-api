@@ -8,10 +8,9 @@ var aggregateService = {
 
     return {
       getAggregate: function(/*aggregateId*/) {
-          console.log('TRY!');
+
         return _ds.pmGetItemsForKey(aggregateItemsKey)
             .then(function (result) {
-                console.log('SUCCESS!');
                 return { aggregateItems: result || [] };
             });
       }

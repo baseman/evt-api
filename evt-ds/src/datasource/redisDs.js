@@ -18,7 +18,7 @@ var initDataSource = function(resources) {
             return Promise.all(pmInitKvp);
         },
         id: {
-            pmUnique: function (key, length) {
+            pmMakeUniqueIds: function (key, length) {
                 return _redisClient.incrbyAsync(key, length).then(function (response) {
                     var ids = [];
                     var end = length + 1;

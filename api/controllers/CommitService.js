@@ -35,10 +35,10 @@ var commitmentService = {
                 var eventItems = [];
                 var aggregateItems = [];
 
-                return _ds.pmMakeUniqueIds(key.aggregateIdKey, commitItems.length)
+                return _ds.id.pmMakeUniqueIds(key.aggregateIdKey, commitItems.length)
                     .then(function(aggregateIds){
                         assignAllCommitItems(commitItems, aggregateItems, eventItems, aggregateIds);
-                        return _ds.pmMakeUniqueIds(key.eventIdKey, eventItems.length);
+                        return _ds.id.pmMakeUniqueIds(key.eventIdKey, eventItems.length);
                     }).then(function(eventIds){
                         for(var e = 0; e < eventItems.length; e++){
                             eventItems[e].event.id = eventIds[e];

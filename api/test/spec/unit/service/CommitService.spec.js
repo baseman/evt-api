@@ -16,8 +16,12 @@ function assertEvent(expect, expected, actual) {
     expect(actual.aggregate.type).toEqual(expected.aggregate.type);
 }
 
-function assertContainsValidKey(expect, key) {
+function assertContainsValidIdKey(expect, key) {
     expect(key === 'AGGREGATE_ID' || key === 'EVENT_ID').toBeTruthy();
+}
+
+function assertContainsValidItemsKey(expect, key) {
+    expect(key === 'AGGREGATE_ITEMS' || key === 'EVENT_ITEMS').toBeTruthy();
 }
 
 function assertEventAggregate(expect, aggregate, eventAggregate) {
@@ -65,22 +69,24 @@ describe('Commit Service', function(){
                 assertInitKvp(expect, {key: 'EVENT', val: 0}, actual[1]);
                 return Promise.resolve();
             },
-            pmMakeUniqueIds: function(key, count){
-                var _count = count;
+            id: {
+                pmMakeUniqueIds: function(key, count){
+                    var _count = count;
 
-                assertContainsValidKey(expect, key);
-                return new Promise(function(resolve){
-                    var maxId = _count + 1;
-                    var ids = [];
-                    for(var i = 1; i < maxId; i++){
-                        ids.push(i);
-                    }
+                    assertContainsValidIdKey(expect, key);
+                    return new Promise(function(resolve){
+                        var maxId = _count + 1;
+                        var ids = [];
+                        for(var i = 1; i < maxId; i++){
+                            ids.push(i);
+                        }
 
-                    resolve(ids);
-                });
+                        resolve(ids);
+                    });
+                }
             },
             pmSetItems: function(key, value){
-                assertContainsValidKey(expect, key);
+                assertContainsValidItemsKey(expect, key);
 
                 if(key === 'AGGREGATE'){
                     assertAggregate(expect, inputAggregates[0], value.aggregateItems[0].aggregate);
