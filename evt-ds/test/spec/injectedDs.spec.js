@@ -1,4 +1,4 @@
-var injectedDs = require('../../../src/datasource/injectedDs');
+var injectedDs = require('../../src/datasource/injectedDs');
 
 describe('injected data source', function(){
     it('should allow the user to inject the function definition into the data source', function(){

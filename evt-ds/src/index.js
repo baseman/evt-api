@@ -4,6 +4,9 @@ var dsItems = {
 };
 
 var ds = {
+    managedResource: {
+        redis: require('./managedResource/redisDs.managedResource').redis
+    },
     getDs: function(config){
         return dsItems[config.dsType];
     }

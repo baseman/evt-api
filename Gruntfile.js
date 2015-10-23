@@ -20,8 +20,8 @@ module.exports = function (grunt) {
           dot: true,
           src: [
             // build dependencies
-            '<%= pkg.directories.api_ds %>/node_modules/<%= pkg.directories.api_util %>',
-            '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.api_util %>',
+            '<%= pkg.directories.api_ds %>/node_modules/<%= pkg.directories.resource_manager %>',
+            '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.resource_manager %>',
             '<%= pkg.directories.api %>/node_modules/<%= pkg.directories.api_ds %>'
           ]
         }]
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
     exec: {
       util_validate: {
         cmd: 'npm test',
-        cwd: '<%= pkg.directories.api_util%>'
+        cwd: '<%= pkg.directories.resource_manager%>'
       },
       ds_validate: {
         cmd: 'npm test',
@@ -56,9 +56,9 @@ module.exports = function (grunt) {
         cmd: 'npm test',
         cwd: '<%= pkg.directories.api%>'
       },
-      util_install_dependencies: {
+      resource_manager_install_dependencies: {
         cmd: 'npm install -i',
-        cwd: '<%= pkg.directories.api_util%>'
+        cwd: '<%= pkg.directories.resource_manager%>'
       },
       ds_install_dependencies: {
         cmd: 'npm install -i',
@@ -83,7 +83,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('api-install-dependencies', [
     'clean:api_dependencies',
-    'exec:util_install_dependencies',
+    'exec:resource_manager_install_dependencies',
     'exec:ds_install_dependencies',
     'exec:api_install_dependencies'
   ]);

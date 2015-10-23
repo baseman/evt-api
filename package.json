@@ -9,12 +9,12 @@
   "directories": {
     "api": "api",
     "api_ds": "evt-ds",
-    "api_util": "evt-res",
+    "resource_manager": "resource-manager",
     "dist": "dist/api",
     "coverage": "coverage/api"
   },
   "scripts": {
-    "build": "node -e \"require('grunt').tasks(['api-install-dependencies']);\"",
+    "build": "npm install -i && node -e \"require('grunt').tasks(['api-install-dependencies']);\"",
     "test": "node -e \"require('grunt').tasks(['api-validate']);\""
   },
   "devDependencies": {

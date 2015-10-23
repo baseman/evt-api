@@ -1,4 +1,4 @@
-var resourceManager = require('../../src/managedResource/resourceManager');
+var resourceManager = require('../../src/lib/resourceManager');
 
 describe("resource factory" , function(){
 
