@@ -35,15 +35,15 @@ var inputAggregates = [
     { id: "0", type: "commitment" }
 ];
 var inputEvents = [
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[0] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[0] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[0] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[1] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[1] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[1] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[2] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[2] }},
-    { event: { id: "0", type: "committed", version: 1, aggregate: inputAggregates[2] }}
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[0] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[0] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[0] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[1] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[1] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[1] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[2] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[2] },
+    { id: "0", type: "committed", version: 1, aggregate: inputAggregates[2] }
 ];
 var input = { commitAggregateBody: { commitAggregateItems: [
     { commitAggregate: { aggregate: inputAggregates[0], eventItems: [
@@ -118,15 +118,15 @@ describe('Commit Service', function(){
 
                 var commitAggregateItems = input.commitAggregateBody.commitAggregateItems;
 
-                assertEventAggregate(expect, commitAggregateItems[0].commitAggregate.aggregate, commitAggregateItems[0].commitAggregate.eventItems[0].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[0].commitAggregate.aggregate, commitAggregateItems[0].commitAggregate.eventItems[1].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[0].commitAggregate.aggregate, commitAggregateItems[0].commitAggregate.eventItems[2].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[1].commitAggregate.aggregate, commitAggregateItems[1].commitAggregate.eventItems[0].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[1].commitAggregate.aggregate, commitAggregateItems[1].commitAggregate.eventItems[1].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[1].commitAggregate.aggregate, commitAggregateItems[1].commitAggregate.eventItems[2].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[2].commitAggregate.aggregate, commitAggregateItems[2].commitAggregate.eventItems[0].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[2].commitAggregate.aggregate, commitAggregateItems[2].commitAggregate.eventItems[1].event.aggregate);
-                assertEventAggregate(expect, commitAggregateItems[2].commitAggregate.aggregate, commitAggregateItems[2].commitAggregate.eventItems[2].event.aggregate);
+                assertEventAggregate(expect, commitAggregateItems[0].commitAggregate.aggregate, commitAggregateItems[0].commitAggregate.eventItems[0].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[0].commitAggregate.aggregate, commitAggregateItems[0].commitAggregate.eventItems[1].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[0].commitAggregate.aggregate, commitAggregateItems[0].commitAggregate.eventItems[2].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[1].commitAggregate.aggregate, commitAggregateItems[1].commitAggregate.eventItems[0].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[1].commitAggregate.aggregate, commitAggregateItems[1].commitAggregate.eventItems[1].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[1].commitAggregate.aggregate, commitAggregateItems[1].commitAggregate.eventItems[2].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[2].commitAggregate.aggregate, commitAggregateItems[2].commitAggregate.eventItems[0].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[2].commitAggregate.aggregate, commitAggregateItems[2].commitAggregate.eventItems[1].aggregate);
+                assertEventAggregate(expect, commitAggregateItems[2].commitAggregate.aggregate, commitAggregateItems[2].commitAggregate.eventItems[2].aggregate);
 
                 expect(result).toEqual('Success');
             })

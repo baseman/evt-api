@@ -41,7 +41,7 @@ var commitmentService = {
                         return _ds.id.pmMakeUniqueIds(key.eventIdKey, eventItems.length);
                     }).then(function(eventIds){
                         for(var e = 0; e < eventItems.length; e++){
-                            eventItems[e].event.id = eventIds[e];
+                            eventItems[e].id = eventIds[e];
                         }
                         return Promise.all([
                             _ds.pmSetItems(key.aggregateItemsKey, aggregateItems ),

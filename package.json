@@ -14,14 +14,16 @@
     "coverage": "coverage/api"
   },
   "scripts": {
+    "edit" : "swagger project edit",
     "build": "npm install -i && node -e \"require('grunt').tasks(['api-install-dependencies']);\"",
     "test": "node -e \"require('grunt').tasks(['api-validate']);\""
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-exec": "^0.4.6",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.1",
-    "load-grunt-tasks": "^3.2.0"
+    "grunt-exec": "^0.4.6",
+    "load-grunt-tasks": "^3.2.0",
+    "swagger": "^0.7.5"
   }
 }
