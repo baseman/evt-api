@@ -1,16 +1,16 @@
 'use strict';
 var dependencies = require('../system/dependencies');
-var evtSvc = require('./EventService');
+var aggregateEventService = require('./AggregateEventService');
 
-var eventSvcInst;
+var aggEvtSvcInst;
 dependencies.pmInitDependencies.then(function(depInst){
-  eventSvcInst = evtSvc.init(depInst.forService);
+  aggEvtSvcInst = aggregateEventService.init(depInst.forService);
 });
 
-module.exports.getEvent = function getEvent (req, res, next) {
+module.exports.getAggregateEvent = function getAggregateEvent (req, res, next) {
   var aggregateId = req.swagger.params['aggregateId'].value;
 
-  eventSvcInst.getEvent(aggregateId).then(function (result) {
+  aggEvtSvcInst.getAggregateEvent(aggregateId).then(function (result) {
     if (typeof result !== 'undefined') {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(result || {}, null, 2));

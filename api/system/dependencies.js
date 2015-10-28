@@ -42,7 +42,7 @@ var pmInitDependencies = managedResources.redis.promiseInitResource({
 
     return _redisDs.pmInitKeys([
         {key: redisCfg.key.aggregateIdKey, val: 0},
-        {key: redisCfg.key.eventIdKey, val: 0}
+        {key: redisCfg.key.aggregateEventIdKey, val: 0}
     ]);
 }).then(function() {
     return {forService: {dataSource: _redisDs}};

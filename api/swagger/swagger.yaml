@@ -31,11 +31,11 @@ paths:
           schema:
             $ref: "#/definitions/errorResponse"
       x-swagger-router-controller: "Aggregate"
-  /event:
+  /aggregateEvent:
     get:
       tags:
-      - "event"
-      operationId: "getEvent"
+      - "aggregateEvent"
+      operationId: "getAggregateEvent"
       parameters:
       - name: "aggregateId"
         in: "query"
@@ -47,12 +47,12 @@ paths:
         200:
           description: "Success"
           schema:
-            $ref: "#/definitions/eventBody"
+            $ref: "#/definitions/aggregateEventBody"
         default:
           description: "Error"
           schema:
             $ref: "#/definitions/errorResponse"
-      x-swagger-router-controller: "Event"
+      x-swagger-router-controller: "AggregateEvent"
   /commit:
     post:
       tags:
@@ -90,10 +90,10 @@ definitions:
     properties:
       aggregate:
         $ref: "#/definitions/aggregate"
-      eventItems:
+      aggregateEventItems:
         type: "array"
         items:
-          $ref: "#/definitions/event"
+          $ref: "#/definitions/aggregateEvent"
   aggregateBody:
     type: "object"
     $ref: "#/definitions/aggregateItems"
@@ -108,14 +108,14 @@ definitions:
         type: string
       type:
         type: string
-  eventBody:
+  aggregateEventBody:
     type: "object"
-    $ref: "#/definitions/eventItems"
-  eventItems:
+    $ref: "#/definitions/aggregateEventItems"
+  aggregateEventItems:
     type: array
     items:
-      $ref: "#/definitions/event"
-  event:
+      $ref: "#/definitions/aggregateEvent"
+  aggregateEvent:
     type: "object"
     properties:
       id:

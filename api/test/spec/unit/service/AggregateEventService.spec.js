@@ -1,23 +1,23 @@
 var Promise = require('bluebird');
 
 var _dependencies = require('../system/dependencies');
-var _eventService = require('../../../../controllers/EventService');
+var _aggregateEventService = require('../../../../controllers/AggregateEventService');
 
-describe('Event Service', function(){
+describe('Aggregate Event Service', function(){
     it('should promise JSON', function(done){
-        var expected = { eventItems: [{"type":"added","aggregateType":"calculation","aggregateId":1,"version":2,"data":{"addVal":101}}] };
+        var expected = { aggregateEventItems: [{"type":"added","aggregateType":"calculation","aggregateId":1,"version":2,"data":{"addVal":101}}] };
 
         var dsFx = {
             pmGetItemsForKey: function(key){
-                expect(key).toEqual('EVENT_ITEMS');
+                expect(key).toEqual('AGGREGATE_EVENT_ITEMS');
                 return new Promise(function(resolve){
-                    resolve(expected.eventItems);
+                    resolve(expected.aggregateEventItems);
                 });
             }
         };
 
-        var eventService = _eventService.init(_dependencies.getForService(dsFx));
-        eventService.getEvent()
+        var aggregateEventService = _aggregateEventService.init(_dependencies.getForService(dsFx));
+        aggregateEventService.getAggregateEvent()
             .then(function(result){
                 expect(result).toEqual(expected);
             })
@@ -27,27 +27,24 @@ describe('Event Service', function(){
     });
 
     it('should promise JSON get with empty data', function(done) {
-        var expected = { eventItems: [] };
+        var expected = { aggregateEventItems: [] };
 
         var dsFx = {
             pmGetItemsForKey: function(key){
-                expect(key).toEqual('EVENT_ITEMS');
+                expect(key).toEqual('AGGREGATE_EVENT_ITEMS');
                 return new Promise(function(resolve){
                     resolve(null);
                 });
             }
         };
 
-        var eventService = _eventService.init(_dependencies.getForService(dsFx));
-        eventService.getEvent()
+        var aggregateEventService = _aggregateEventService.init(_dependencies.getForService(dsFx));
+        aggregateEventService.getAggregateEvent()
             .then(function(result){
                 expect(result).toEqual(expected);
             })
             .finally(function(){
                 done();
             });
-    });
-
-    xit('should promise JSON set', function(){
     });
 });

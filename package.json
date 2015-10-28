@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "npm install -i && node -e \"require('grunt').tasks(['api-install-dependencies']);\"",
-    "test": "node -e \"require('grunt').tasks(['api-validate']);\""
+    "test": "node -e \"require('grunt').tasks(['api-validate']);\"",
+    "edit": "swagger project edit"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
