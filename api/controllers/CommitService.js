@@ -31,21 +31,21 @@ var commitmentService = {
         return {
             pmCommitAggregate: function(data) {
 
-                var commitItems = data.commitAggregateBody.commitAggregateItems;
-                var aggEvts = [];
-                var aggs = [];
+                var _commitItems = data.commitAggregateBody.commitAggregateItems;
+                var _aggEvts = [];
+                var _aggs = [];
 
-                return _ds.id.pmMakeUniqueIds(key.aggregateIdKey, commitItems.length)
+                return _ds.id.pmMakeUniqueIds(key.aggregateIdKey, _commitItems.length)
                     .then(function(aggIds){
-                        assignAllCommitItems(commitItems, aggs, aggEvts, aggIds);
-                        return _ds.id.pmMakeUniqueIds(key.aggregateEventIdKey, aggEvts.length);
-                    }).then(function(eventIds){
-                        for(var e = 0; e < aggEvts.length; e++){
-                            aggEvts[e].aggregateEvent.id = eventIds[e];
+                        assignAllCommitItems(_commitItems, _aggs, _aggEvts, aggIds);
+                        return _ds.id.pmMakeUniqueIds(key.aggregateEventIdKey, _aggEvts.length);
+                    }).then(function(aggEvtIds){
+                        for(var e = 0; e < _aggEvts.length; e++){
+                            _aggEvts[e].aggregateEvent.id = aggEvtIds[e];
                         }
                         return Promise.all([
-                            _ds.pmSetItems(key.aggregateItemsKey, aggs ),
-                            _ds.pmSetItems(key.aggregateEventItemsKey, aggEvts )
+                            _ds.pmSetItems(key.aggregateItemsKey, _aggs ),
+                            _ds.pmSetItems(key.aggregateEventItemsKey, _aggEvts )
                         ]);
                     }).then(function(){
                         return "Success";

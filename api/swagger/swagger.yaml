@@ -120,7 +120,7 @@ definitions:
     properties:
       id:
         type: "string"
-      type:
+      aggregateEventType:
         type: "string"
       version:
         type: "integer"
