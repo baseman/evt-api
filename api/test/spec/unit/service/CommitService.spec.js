@@ -5,15 +5,15 @@ var _commitService = require('../../../../controllers/CommitService');
 
 function assertAggregate(expect, expected, actual) {
     expect(actual.id).toBeGreaterThan(0);
-    expect(actual.type).toEqual(expected.type);
+    expect(actual.aggregateType).toEqual(expected.aggregateType);
 }
 
-function assertEvent(expect, expected, actual) {
+function assertAggregateEvent(expect, expected, actual) {
     expect(actual.id).toBeGreaterThan(0);
-    expect(actual.type).toEqual(expected.type);
+    expect(actual.aggregateEventType).toEqual(expected.aggregateEventType);
     expect(actual.version).toEqual(expected.version);
     expect(actual.aggregate.id).toBeGreaterThan(0);
-    expect(actual.aggregate.type).toEqual(expected.aggregate.type);
+    expect(actual.aggregate.aggregateType).toEqual(expected.aggregate.aggregateType);
 }
 
 function assertContainsValidIdKey(expect, key) {
@@ -26,7 +26,7 @@ function assertContainsValidItemsKey(expect, key) {
 
 function assertEventAggregate(expect, aggregate, eventAggregate) {
     expect(aggregate.id).toEqual(eventAggregate.id);
-    expect(aggregate.type).toEqual(eventAggregate.type);
+    expect(aggregate.aggregateType).toEqual(eventAggregate.aggregateType);
 }
 
 var inputAggs = [
@@ -95,15 +95,15 @@ describe('Commit Service', function(){
                 }
 
                 if(key.indexOf('AGGREGATE_EVENT') !== -1){
-                    assertEvent(expect, inputEvts[0].aggregateEvent, value[0].aggregateEvent);
-                    assertEvent(expect, inputEvts[1].aggregateEvent, value[1].aggregateEvent);
-                    assertEvent(expect, inputEvts[2].aggregateEvent, value[2].aggregateEvent);
-                    assertEvent(expect, inputEvts[3].aggregateEvent, value[3].aggregateEvent);
-                    assertEvent(expect, inputEvts[4].aggregateEvent, value[4].aggregateEvent);
-                    assertEvent(expect, inputEvts[5].aggregateEvent, value[5].aggregateEvent);
-                    assertEvent(expect, inputEvts[6].aggregateEvent, value[6].aggregateEvent);
-                    assertEvent(expect, inputEvts[7].aggregateEvent, value[7].aggregateEvent);
-                    assertEvent(expect, inputEvts[8].aggregateEvent, value[8].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[0].aggregateEvent, value[0].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[1].aggregateEvent, value[1].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[2].aggregateEvent, value[2].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[3].aggregateEvent, value[3].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[4].aggregateEvent, value[4].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[5].aggregateEvent, value[5].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[6].aggregateEvent, value[6].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[7].aggregateEvent, value[7].aggregateEvent);
+                    assertAggregateEvent(expect, inputEvts[8].aggregateEvent, value[8].aggregateEvent);
                 }
 
                 return new Promise(function(resolve){
